@@ -1,0 +1,79 @@
+ // A JavaScript program for Floyd Warshall All
+      var INF = 9999;
+      class AllPairShortestPath {
+        constructor() {
+          this.V = 4;
+        } 
+        FloydWarshall(Graph) {
+          var distance = Array.from(Array(this.V), () => new Array(this.V).fill(0));
+          var i, j, k;
+          for (i = 0; i < this.V; i++) {
+            for (j = 0; j < this.V; j++) {
+              distance[i][j] = Graph[i][j];
+            }
+          }          
+          for (k = 0; k < this.V; k++) {
+            // Pick all vertices as source
+            // one by one
+            for (i = 0; i < this.V; i++) {
+              // Pick all vertices as destination
+              // for the above picked source
+              for (j = 0; j < this.V; j++) {
+            
+                if (distance[i][k] + distance[k][j] < distance[i][j]) {
+                  distance[i][j] = distance[i][k] + distance[k][j];
+                }
+              }
+            }
+          }
+
+          this.printSolution(distance);
+        }
+ 
+        printSolution(distance) {
+          console.log("Following matrix shows the shortest " +"distances between every pair of vertices");
+          for (var i = 0; i < this.V; ++i) {
+            for (var j = 0; j < this.V; ++j) {
+              if (distance[i][j] == INF) {
+                console.log(" INF ");
+              } else {
+                console.log("  " + distance[i][j] + " ");
+              }
+            }
+ 
+            console.log("-----");
+          }
+        }
+      }
+      var Graph = [
+        [0, 3, INF, 5],
+         [2, 0, INF, 4],
+         [INF, 1, 0, INF],
+         [INF, INF, 2, 0]
+      ];
+ 
+      var a = new AllPairShortestPath();
+ 
+      a.FloydWarshall(Graph);
+      //Output-
+//      Following matrix shows the shortest distances between every pair of vertices
+//  0 
+//  3
+//  7
+//  5
+//-----
+//  2
+//  0
+//  6
+//  4
+//-----
+//  3
+//  1
+//  0
+//  5
+//-----
+//  5
+//  3
+//  2
+//  0
+//-----
