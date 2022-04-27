@@ -1,0 +1,37 @@
+#Floyed Warshall
+nV = 4
+INF = 999
+
+# Algorithm 
+def W_floyd(G):
+    distance = list(map(lambda p: list(map(lambda q: q, p)), G))
+
+    # Adding vertices individually
+    for i in range(nV):
+        for j in range(nV):
+            for k in range(nV):
+                distance[j][k] = min(distance[j][k], distance[j][i] + distance[i][k])
+    sol(distance)
+
+# Printing the output
+def sol(distance):
+    print("Here is Floyed Warshall Output:")
+    for i in range(nV):
+        for j in range(nV):
+            if(distance[i][j] == INF):
+                print("INF", end=" ")
+            else:
+                print(distance[i][j], end="  ")
+        print(" ")
+
+G = [[0, 3, INF, 5],
+         [2, 0, INF, 4],
+         [INF, 1, 0, INF],
+         [INF, INF, 2, 0]]
+W_floyd(G)
+#output:
+#Here is Floyed Warshall Output:
+#0  3  7  5
+#2  0  6  4
+#3  1  0  5
+#5  3  2  0
